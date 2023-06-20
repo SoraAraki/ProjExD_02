@@ -1,6 +1,7 @@
 import random
 import sys
 import pygame as pg
+import time
 WIDTH, HEIGHT = 1600, 900
 delta = {
     pg.K_UP: (0, -5),
@@ -33,6 +34,8 @@ def main():
     # こうかとんSurface（kk_img）からこうかとんRect（kk_rct）を抽出する
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
+    kk_img_end = pg.image.load("fig/8.png") #　終了時のこうかとんの画像
+    kk_img_end = pg.transform.rotozoom(kk_img_end, 0, 2.0)
     bd_img = pg.Surface((20, 20))  # 練習１
     bd_img.set_colorkey((0, 0, 0))  # 黒い部分を透明にする
     pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)
@@ -52,6 +55,7 @@ def main():
             
         if kk_rct.colliderect(bd_rct):  # 練習５
             print("ゲームオーバー")
+            time.sleep(3)
             return   # ゲームオーバー 
 
         key_lst = pg.key.get_pressed()
@@ -73,6 +77,9 @@ def main():
         if not tate:  # 縦方向に範囲外だったら
             vy *= -1
         screen.blit(bd_img, bd_rct)
+        if kk_rct.colliderect(bd_rct) : # 爆弾にぶつかったら
+            screen.blit(kk_img_end,kk_rct) #絵が変わる
+
         pg.display.update()
         tmr += 1
         clock.tick(50)
