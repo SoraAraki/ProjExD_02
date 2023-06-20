@@ -55,7 +55,7 @@ def main():
             
         if kk_rct.colliderect(bd_rct):  # 練習５
             print("ゲームオーバー")
-            time.sleep(3)
+            time.sleep(2)
             return   # ゲームオーバー 
 
         key_lst = pg.key.get_pressed()
@@ -70,6 +70,9 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
+
+        avx,avy =vx*accs[min(tmr//500,9)],vy*accs[min(tmr//500,9)]
+        bd_img = bd_imgs[min(tmr//500, 9)]
         bd_rct.move_ip(vx, vy)  # 練習２
         yoko, tate = check_bound(bd_rct)
         if not yoko:  # 横方向に画面外だったら
